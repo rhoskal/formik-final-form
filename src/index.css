@@ -9,3 +9,17 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+.app {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  color: #fff;
+}
+
+.form {
+  width: 400px;
+}
