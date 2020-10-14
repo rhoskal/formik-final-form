@@ -8,6 +8,7 @@
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-final-form": "^6.5.1",
     "react-scripts": "3.4.3",
     "typescript": "~3.7.2",
     "yup": "^0.29.3"
@@ -50,6 +51,17 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsc && yarn lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "yarn lint:fix",
+      "yarn format"
     ]
   }
 }

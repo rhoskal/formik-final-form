@@ -15,7 +15,7 @@ type InputProps = {
  * Component
  */
 
-export const Input: FC<InputProps> = (props) => {
+export const FormikInput: FC<InputProps> = (props) => {
   const { id, label, name, ...rest } = props;
   const [field, meta] = useField<string>(props);
 
