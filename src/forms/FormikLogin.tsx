@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Formik, FormikProps } from "formik";
+import { Form, Formik, FormikHelpers, FormikProps } from "formik";
 import * as Yup from "yup";
 
 import { Button } from "../components/button/Button";
@@ -9,10 +9,13 @@ import { FormikInput } from "../components/input/FormikInput";
  * Types
  */
 
-type FormFields = "email" | "password";
+type FormValues = {
+  email: string;
+  password: string;
+};
 
 /*
- * Component
+ * Components
  */
 
 const validationSchema = Yup.object().shape({
@@ -26,20 +29,23 @@ const validationSchema = Yup.object().shape({
 });
 
 export const FormikLogin = (): JSX.Element => {
+  const initialValues: FormValues = {
+    email: "",
+    password: "",
+  };
+
   return (
     <Formik
-      initialValues={{
-        email: "",
-        password: "",
-      }}
-      onSubmit={(values, { setSubmitting }): void => {
+      initialValues={initialValues}
+      onSubmit={(values: FormValues, { setSubmitting }: FormikHelpers<FormValues>): void => {
         console.log(values);
 
         setSubmitting(false);
       }}
       validationSchema={validationSchema}>
-      {(formik: FormikProps<FormFields>): React.ReactNode => (
+      {(formik: FormikProps<FormValues>): React.ReactNode => (
         <Form className="form">
+          <h1>Formik</h1>
           <FormikInput id="email" label="Email" name="email" placeholder="Enter your email" />
           <FormikInput
             id="password"
@@ -51,6 +57,7 @@ export const FormikLogin = (): JSX.Element => {
           <Button disabled={formik.isSubmitting || !formik.isValid} type="submit">
             Sign In
           </Button>
+          <pre>{JSON.stringify(formik.values, null, 2)}</pre>
         </Form>
       )}
     </Formik>

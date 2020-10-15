@@ -23,3 +23,16 @@ code {
 .form {
   width: 400px;
 }
+
+.split {
+  display: flex;
+  align-items: center;
+  height: 500px;
+}
+
+.divider {
+  height: 100%;
+  width: 2px;
+  background: #fff;
+  margin: 0 48px;
+}

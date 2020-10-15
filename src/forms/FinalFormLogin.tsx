@@ -8,22 +8,32 @@ import { FinalFormInput } from "../components/input/FinalFormInput";
  * Types
  */
 
+type FormValues = {
+  email: string;
+  password: string;
+};
+
+type FormErrors = Partial<FormValues>;
+
 /*
- * Component
+ * Components
  */
 
 export const FinalFormLogin = (): JSX.Element => {
+  const initialValues: FormValues = {
+    email: "",
+    password: "",
+  };
+
   return (
     <Form
-      initialValues={{
-        email: "",
-        password: "",
-      }}
+      initialValues={initialValues}
       onSubmit={(values): void => {
         console.log(values);
       }}
-      render={({ handleSubmit, pristine, submitting }): React.ReactNode => (
+      render={({ handleSubmit, pristine, submitting, values }): React.ReactNode => (
         <form className="form" onSubmit={handleSubmit}>
+          <h1>React Final Form</h1>
           <FinalFormInput label="Email" name="email" placeholder="Enter your email" />
           <FinalFormInput
             label="Password"
@@ -34,10 +44,11 @@ export const FinalFormLogin = (): JSX.Element => {
           <Button disabled={pristine || submitting} type="submit">
             Sign In
           </Button>
+          <pre>{JSON.stringify(values, null, 2)}</pre>
         </form>
       )}
-      validate={(values): Record<string, string> => {
-        let errors = {};
+      validate={(values): FormErrors => {
+        let errors: FormErrors = {};
 
         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
           errors = {
