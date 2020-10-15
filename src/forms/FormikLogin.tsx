@@ -1,6 +1,9 @@
 import React from "react";
 import { Form, Formik, FormikHelpers, FormikProps } from "formik";
 import * as Yup from "yup";
+import { pipe } from "fp-ts/pipeable";
+import * as A from "fp-ts/lib/Array";
+import * as O from "fp-ts/lib/Option";
 
 import { Button } from "../components/button/Button";
 import { FormikInput } from "../components/input/FormikInput";
@@ -45,17 +48,24 @@ const SelectOptions: Array<Choice> = [
 export const FormikLogin: React.FC = () => {
   const initialValues: FormValues = {
     email: "",
-    network: SelectOptions[0].id,
+    network: pipe(
+      SelectOptions,
+      A.head,
+      O.fold(
+        () => "",
+        (c: Choice) => c.id,
+      ),
+    ),
     password: "",
   };
 
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={(values: FormValues, { setSubmitting }: FormikHelpers<FormValues>): void => {
+      onSubmit={(values: FormValues, actions: FormikHelpers<FormValues>): void => {
         console.log(values);
 
-        setSubmitting(false);
+        actions.setSubmitting(false);
       }}
       validationSchema={validationSchema}>
       {(formik: FormikProps<FormValues>): React.ReactNode => (
@@ -83,7 +93,7 @@ export const FormikLogin: React.FC = () => {
           <Button disabled={formik.isSubmitting} type="submit">
             Sign In
           </Button>
-          <pre>{JSON.stringify(formik, null, 2)}</pre>
+          <pre>{JSON.stringify(formik.values, null, 2)}</pre>
         </Form>
       )}
     </Formik>

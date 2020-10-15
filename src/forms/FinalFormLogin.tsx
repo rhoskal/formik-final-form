@@ -1,5 +1,8 @@
 import React from "react";
 import { Form } from "react-final-form";
+import { pipe } from "fp-ts/pipeable";
+import * as A from "fp-ts/Array";
+import * as O from "fp-ts/Option";
 
 import { Button } from "../components/button/Button";
 import { FinalFormInput } from "../components/input/FinalFormInput";
@@ -36,7 +39,14 @@ const SelectOptions: Array<Choice> = [
 export const FinalFormLogin: React.FC = () => {
   const initialValues: FormValues = {
     email: "",
-    network: SelectOptions[0].id,
+    network: pipe(
+      SelectOptions,
+      A.head,
+      O.fold(
+        () => "",
+        (c: Choice) => c.id,
+      ),
+    ),
     password: "",
   };
 
