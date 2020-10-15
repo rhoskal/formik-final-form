@@ -24,10 +24,15 @@ code {
   width: 400px;
 }
 
+.field-error {
+  color: red;
+  height: 18px;
+}
+
 .split {
   display: flex;
   align-items: center;
-  height: 500px;
+  height: 600px;
 }
 
 .divider {

@@ -2,38 +2,46 @@ import React from "react";
 import { Field, useField } from "react-final-form";
 
 import "./styles.scss";
+import { Choice } from "./FormikSelect";
 
 /*
  * Types
  */
 
-type InputProps = {
+type SelectProps = {
   label?: string;
   name: string;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+  options?: Array<Choice>;
+} & React.SelectHTMLAttributes<HTMLSelectElement>;
 
 /*
  * Components
  */
 
-export const FinalFormInput: React.FC<InputProps> = (props) => {
-  const { id, label, name, ...rest } = props;
+export const FinalFormSelect: React.FC<SelectProps> = (props) => {
+  const { id, label, name, options, ...rest } = props;
   const { input, meta } = useField(name);
 
   return (
     <Field
       name={name}
       render={(): React.ReactNode => (
-        <div className="input-wrapper">
+        <div className="selector-wrapper">
           <label hidden={!label} htmlFor={id || name}>
             {label ?? label}
           </label>
-          <input
+          <select
             className={meta.error && meta.touched ? "field-error" : undefined}
             id={id || name}
             {...input}
-            {...rest}
-          />
+            {...rest}>
+            {options &&
+              options.map((o: Choice) => (
+                <option key={o.id} value={o.id}>
+                  {o.value}
+                </option>
+              ))}
+          </select>
           <div className="field-error">
             <span>{meta.touched && (meta.error || meta.submitError)}</span>
           </div>

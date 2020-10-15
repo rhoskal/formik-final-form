@@ -7,29 +7,41 @@ import "./styles.scss";
  * Types
  */
 
-type InputProps = {
+export type Choice = {
+  id: string;
+  value: string;
+};
+
+type SelectProps = {
   label?: string;
+  options?: Array<Choice>;
 } & FieldAttributes<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 /*
  * Components
  */
 
-export const FormikInput: React.FC<InputProps> = (props) => {
-  const { id, label, name, ...rest } = props;
+export const FormikSelect: React.FC<SelectProps> = (props) => {
+  const { id, label, name, options, ...rest } = props;
   const [field, meta] = useField<string>(props);
 
   return (
-    <div className="input-wrapper">
+    <div className="selector-wrapper">
       <label hidden={!label} htmlFor={id || name}>
         {label ?? label}
       </label>
-      <input
+      <select
         className={meta.error && meta.touched ? "field-error" : undefined}
         id={id || name}
         {...field}
-        {...rest}
-      />
+        {...rest}>
+        {options &&
+          options.map((o: Choice) => (
+            <option key={o.id} value={o.id}>
+              {o.value}
+            </option>
+          ))}
+      </select>
       <div className="field-error">
         <ErrorMessage name={field.name} />
       </div>

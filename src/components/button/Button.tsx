@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, FC } from "react";
+import React from "react";
 
 import "./styles.scss";
 
@@ -6,13 +6,13 @@ import "./styles.scss";
  * Types
  */
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 /*
  * Component
  */
 
-export const Button: FC<ButtonProps> = (props) => {
+export const Button: React.FC<ButtonProps> = (props) => {
   const { children, ...rest } = props;
 
   return (

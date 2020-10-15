@@ -3,6 +3,8 @@ import { Form } from "react-final-form";
 
 import { Button } from "../components/button/Button";
 import { FinalFormInput } from "../components/input/FinalFormInput";
+import { Choice } from "../components/select/FormikSelect";
+import { FinalFormSelect } from "../components/select/FinalFormSelect";
 
 /*
  * Types
@@ -10,6 +12,7 @@ import { FinalFormInput } from "../components/input/FinalFormInput";
 
 type FormValues = {
   email: string;
+  network: string;
   password: string;
 };
 
@@ -19,9 +22,21 @@ type FormErrors = Partial<FormValues>;
  * Components
  */
 
-export const FinalFormLogin = (): JSX.Element => {
+const SelectOptions: Array<Choice> = [
+  {
+    id: "corporate",
+    value: "Corporate",
+  },
+  {
+    id: "internal",
+    value: "Internal",
+  },
+];
+
+export const FinalFormLogin: React.FC = () => {
   const initialValues: FormValues = {
     email: "",
+    network: SelectOptions[0].id,
     password: "",
   };
 
@@ -31,34 +46,70 @@ export const FinalFormLogin = (): JSX.Element => {
       onSubmit={(values): void => {
         console.log(values);
       }}
-      render={({ handleSubmit, pristine, submitting, values }): React.ReactNode => (
-        <form className="form" onSubmit={handleSubmit}>
+      render={(finalForm): React.ReactNode => (
+        <form className="form" onSubmit={finalForm.handleSubmit}>
           <h1>React Final Form</h1>
-          <FinalFormInput label="Email" name="email" placeholder="Enter your email" />
           <FinalFormInput
+            id="email-final-form"
+            label="Email"
+            name="email"
+            placeholder="Enter your email"
+          />
+          <FinalFormInput
+            id="password-final-form"
             label="Password"
             name="password"
             placeholder="Enter your password"
             type="password"
           />
-          <Button disabled={pristine || submitting} type="submit">
+          <FinalFormSelect
+            id="network-final-form"
+            label="Network"
+            name="network"
+            options={SelectOptions}
+          />
+          <Button disabled={finalForm.submitting} type="submit">
             Sign In
           </Button>
-          <pre>{JSON.stringify(values, null, 2)}</pre>
+          <pre>{JSON.stringify(finalForm.values, null, 2)}</pre>
         </form>
       )}
       validate={(values): FormErrors => {
         let errors: FormErrors = {};
 
-        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+        if (!values.email) {
+          errors = {
+            ...errors,
+            email: "Required",
+          };
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
           errors = {
             ...errors,
             email: "Invalid email address",
+          };
+        }
+
+        if (!values.password) {
+          errors = {
+            ...errors,
+            password: "Required",
           };
         } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/i.test(values.password)) {
           errors = {
             ...errors,
             password: "Must Contain 8 Characters, One Uppercase, One Lowercase",
+          };
+        }
+
+        if (!values.network) {
+          errors = {
+            ...errors,
+            network: "Required",
+          };
+        } else if (values.network === "") {
+          errors = {
+            ...errors,
+            network: "Please select a network",
           };
         }
 

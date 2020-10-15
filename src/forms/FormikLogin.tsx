@@ -4,6 +4,7 @@ import * as Yup from "yup";
 
 import { Button } from "../components/button/Button";
 import { FormikInput } from "../components/input/FormikInput";
+import { Choice, FormikSelect } from "../components/select/FormikSelect";
 
 /*
  * Types
@@ -11,6 +12,7 @@ import { FormikInput } from "../components/input/FormikInput";
 
 type FormValues = {
   email: string;
+  network: string;
   password: string;
 };
 
@@ -20,6 +22,7 @@ type FormValues = {
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email address").required("Required"),
+  network: Yup.string().required("Required"),
   password: Yup.string()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
@@ -28,9 +31,21 @@ const validationSchema = Yup.object().shape({
     .required("Required"),
 });
 
-export const FormikLogin = (): JSX.Element => {
+const SelectOptions: Array<Choice> = [
+  {
+    id: "corporate",
+    value: "Corporate",
+  },
+  {
+    id: "internal",
+    value: "Internal",
+  },
+];
+
+export const FormikLogin: React.FC = () => {
   const initialValues: FormValues = {
     email: "",
+    network: SelectOptions[0].id,
     password: "",
   };
 
@@ -46,18 +61,29 @@ export const FormikLogin = (): JSX.Element => {
       {(formik: FormikProps<FormValues>): React.ReactNode => (
         <Form className="form">
           <h1>Formik</h1>
-          <FormikInput id="email" label="Email" name="email" placeholder="Enter your email" />
           <FormikInput
-            id="password"
+            id="email-formik"
+            label="Email"
+            name="email"
+            placeholder="Enter your email"
+          />
+          <FormikInput
+            id="password-formik"
             label="Password"
             name="password"
             placeholder="Enter your password"
             type="password"
           />
-          <Button disabled={formik.isSubmitting || !formik.isValid} type="submit">
+          <FormikSelect
+            id="network-formik"
+            label="Network"
+            name="network"
+            options={SelectOptions}
+          />
+          <Button disabled={formik.isSubmitting} type="submit">
             Sign In
           </Button>
-          <pre>{JSON.stringify(formik.values, null, 2)}</pre>
+          <pre>{JSON.stringify(formik, null, 2)}</pre>
         </Form>
       )}
     </Formik>
