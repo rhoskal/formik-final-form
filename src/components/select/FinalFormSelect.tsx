@@ -1,5 +1,8 @@
 import React from "react";
 import { Field, useField } from "react-final-form";
+import { pipe } from "fp-ts/pipeable";
+import * as O from "fp-ts/Option";
+import * as A from "fp-ts/Array";
 
 import "./styles.scss";
 import { Choice } from "./FormikSelect";
@@ -35,12 +38,20 @@ export const FinalFormSelect: React.FC<SelectProps> = (props) => {
             id={id || name}
             {...input}
             {...rest}>
-            {options &&
-              options.map((o: Choice) => (
-                <option key={o.id} value={o.id}>
-                  {o.value}
-                </option>
-              ))}
+            {pipe(
+              options,
+              O.fromNullable,
+              O.fold(
+                () => null,
+                (opts) => {
+                  return A.map<Choice, React.ReactNode>((o) => (
+                    <option key={o.id} value={o.id}>
+                      {o.value}
+                    </option>
+                  ))(opts);
+                },
+              ),
+            )}
           </select>
           <div className="field-error">
             <span>{meta.touched && (meta.error || meta.submitError)}</span>

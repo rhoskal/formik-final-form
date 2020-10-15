@@ -1,5 +1,8 @@
 import React from "react";
 import { ErrorMessage, FieldAttributes, useField } from "formik";
+import { pipe } from "fp-ts/pipeable";
+import * as A from "fp-ts/lib/Array";
+import * as O from "fp-ts/lib/Option";
 
 import "./styles.scss";
 
@@ -35,12 +38,20 @@ export const FormikSelect: React.FC<SelectProps> = (props) => {
         id={id || name}
         {...field}
         {...rest}>
-        {options &&
-          options.map((o: Choice) => (
-            <option key={o.id} value={o.id}>
-              {o.value}
-            </option>
-          ))}
+        {pipe(
+          options,
+          O.fromNullable,
+          O.fold(
+            () => null,
+            (opts) => {
+              return A.map<Choice, React.ReactNode>((o) => (
+                <option key={o.id} value={o.id}>
+                  {o.value}
+                </option>
+              ))(opts);
+            },
+          ),
+        )}
       </select>
       <div className="field-error">
         <ErrorMessage name={field.name} />
