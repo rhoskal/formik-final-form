@@ -34,7 +34,7 @@ const validationSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const SelectOptions: Array<Choice> = [
+const selectOptions: Array<Choice> = [
   {
     id: "corporate",
     value: "Corporate",
@@ -49,7 +49,7 @@ export const FormikLogin: React.FC = () => {
   const initialValues: FormValues = {
     email: "",
     network: pipe(
-      SelectOptions,
+      selectOptions,
       A.head,
       O.fold(
         () => "",
@@ -88,7 +88,7 @@ export const FormikLogin: React.FC = () => {
             id="network-formik"
             label="Network"
             name="network"
-            options={SelectOptions}
+            options={selectOptions}
           />
           <Button disabled={formik.isSubmitting} type="submit">
             Sign In

@@ -25,7 +25,7 @@ type FormErrors = Partial<FormValues>;
  * Components
  */
 
-const SelectOptions: Array<Choice> = [
+const selectOptions: Array<Choice> = [
   {
     id: "corporate",
     value: "Corporate",
@@ -40,7 +40,7 @@ export const FinalFormLogin: React.FC = () => {
   const initialValues: FormValues = {
     email: "",
     network: pipe(
-      SelectOptions,
+      selectOptions,
       A.head,
       O.fold(
         () => "",
@@ -76,7 +76,7 @@ export const FinalFormLogin: React.FC = () => {
             id="network-final-form"
             label="Network"
             name="network"
-            options={SelectOptions}
+            options={selectOptions}
           />
           <Button disabled={finalForm.submitting} type="submit">
             Sign In
