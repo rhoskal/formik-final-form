@@ -35,7 +35,7 @@ export const FinalFormInput: React.FC<InputProps> = (props) => {
             {...rest}
           />
           <div className="field-error">
-            <span>{meta.touched && (meta.error || meta.submitError)}</span>
+            {meta.error && meta.touched && <span>{meta.error}</span>}
           </div>
         </div>
       )}
