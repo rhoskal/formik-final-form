@@ -58,7 +58,7 @@ export const FinalFormLogin: React.FC = () => {
       }}
       render={(finalForm): React.ReactNode => (
         <form className="form" onSubmit={finalForm.handleSubmit}>
-          <h1>React Final Form</h1>
+          <h1>Final Form</h1>
           <FinalFormInput
             id="email-final-form"
             label="Email"
