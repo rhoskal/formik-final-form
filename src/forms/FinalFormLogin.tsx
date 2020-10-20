@@ -1,8 +1,8 @@
 import React from "react";
 import { Form } from "react-final-form";
-import { pipe } from "fp-ts/pipeable";
-import * as A from "fp-ts/Array";
-import * as O from "fp-ts/Option";
+import { pipe } from "fp-ts/es6/pipeable";
+import * as A from "fp-ts/es6/Array";
+import * as O from "fp-ts/es6/Option";
 
 import { Button } from "../components/button/Button";
 import { FinalFormInput } from "../components/input/FinalFormInput";

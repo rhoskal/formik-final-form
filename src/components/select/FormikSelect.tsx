@@ -1,8 +1,8 @@
 import React from "react";
 import { ErrorMessage, FieldAttributes, useField } from "formik";
-import { pipe } from "fp-ts/pipeable";
-import * as A from "fp-ts/lib/Array";
-import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/es6/pipeable";
+import * as A from "fp-ts/es6/Array";
+import * as O from "fp-ts/es6/Option";
 
 import "./styles.scss";
 

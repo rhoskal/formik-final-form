@@ -1,8 +1,8 @@
 import React from "react";
 import { Field, useField } from "react-final-form";
-import { pipe } from "fp-ts/pipeable";
-import * as O from "fp-ts/Option";
-import * as A from "fp-ts/Array";
+import { pipe } from "fp-ts/es6/pipeable";
+import * as O from "fp-ts/es6/Option";
+import * as A from "fp-ts/es6/Array";
 
 import "./styles.scss";
 import { Choice } from "./FormikSelect";
