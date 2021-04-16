@@ -22,7 +22,7 @@ type FormValues = {
 type FormErrors = Partial<FormValues>;
 
 /*
- * Components
+ * Helpers
  */
 
 const selectOptions: Array<Choice> = [
@@ -36,7 +36,11 @@ const selectOptions: Array<Choice> = [
   },
 ];
 
-export const FinalFormLogin: React.FC = () => {
+/*
+ * Main
+ */
+
+export const FinalFormLogin = (): React.ReactNode => {
   const initialValues: FormValues = {
     email: "",
     network: pipe(
@@ -56,7 +60,7 @@ export const FinalFormLogin: React.FC = () => {
       onSubmit={(values): void => {
         console.log(values);
       }}
-      render={(finalForm): React.ReactNode => (
+      render={(finalForm): JSX.Element => (
         <form className="form" onSubmit={finalForm.handleSubmit}>
           <h1>Final Form</h1>
           <FinalFormInput

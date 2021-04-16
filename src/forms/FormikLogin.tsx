@@ -20,7 +20,7 @@ type FormValues = {
 };
 
 /*
- * Components
+ * Helpers
  */
 
 const validationSchema = Yup.object().shape({
@@ -45,7 +45,11 @@ const selectOptions: Array<Choice> = [
   },
 ];
 
-export const FormikLogin: React.FC = () => {
+/*
+ * Main
+ */
+
+export const FormikLogin = (): React.ReactNode => {
   const initialValues: FormValues = {
     email: "",
     network: pipe(
@@ -68,7 +72,7 @@ export const FormikLogin: React.FC = () => {
         actions.setSubmitting(false);
       }}
       validationSchema={validationSchema}>
-      {(formik: FormikProps<FormValues>): React.ReactNode => (
+      {(formik: FormikProps<FormValues>): JSX.Element => (
         <Form className="form">
           <h1>Formik</h1>
           <FormikInput
