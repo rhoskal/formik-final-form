@@ -1,22 +1,16 @@
-import React, { FC } from "react";
+import React from "react";
 
 import { FormikLogin } from "./forms/FormikLogin";
 import { FinalFormLogin } from "./forms/FinalFormLogin";
 
-const LoginForms: FC = () => {
-  return (
-    <div className="split">
-      <FormikLogin />
-      <div className="divider" />
-      <FinalFormLogin />
-    </div>
-  );
-};
-
-const App: FC = () => {
+const App = (): JSX.Element => {
   return (
     <div className="app">
-      <LoginForms />
+      <div className="split">
+        <FormikLogin />
+        <div className="divider" />
+        <FinalFormLogin />
+      </div>
     </div>
   );
 };

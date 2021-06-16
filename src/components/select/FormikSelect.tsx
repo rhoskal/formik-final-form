@@ -1,8 +1,8 @@
 import React from "react";
 import { ErrorMessage, FieldAttributes, useField } from "formik";
-import { pipe } from "fp-ts/es6/pipeable";
-import * as A from "fp-ts/es6/Array";
-import * as O from "fp-ts/es6/Option";
+import { pipe } from "fp-ts/pipeable";
+import * as RA from "fp-ts/ReadonlyArray";
+import * as O from "fp-ts/Option";
 
 import "./styles.scss";
 
@@ -17,7 +17,7 @@ export type Choice = {
 
 type SelectProps = {
   label?: string;
-  options?: Array<Choice>;
+  options?: ReadonlyArray<Choice>;
 } & FieldAttributes<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 /*
@@ -44,7 +44,7 @@ export const FormikSelect: React.FC<SelectProps> = (props) => {
           O.fold(
             () => null,
             (opts) => {
-              return A.map<Choice, React.ReactNode>((o) => (
+              return RA.map<Choice, React.ReactNode>((o) => (
                 <option key={o.id} value={o.id}>
                   {o.value}
                 </option>

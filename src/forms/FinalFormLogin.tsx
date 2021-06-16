@@ -1,8 +1,8 @@
 import React from "react";
 import { Form } from "react-final-form";
-import { pipe } from "fp-ts/es6/pipeable";
-import * as A from "fp-ts/es6/Array";
-import * as O from "fp-ts/es6/Option";
+import { pipe } from "fp-ts/pipeable";
+import * as O from "fp-ts/Option";
+import * as RA from "fp-ts/ReadonlyArray";
 
 import { Button } from "../components/button/Button";
 import { FinalFormInput } from "../components/input/FinalFormInput";
@@ -13,11 +13,11 @@ import { FinalFormSelect } from "../components/select/FinalFormSelect";
  * Types
  */
 
-type FormValues = {
+interface FormValues {
   email: string;
   network: string;
   password: string;
-};
+}
 
 type FormErrors = Partial<FormValues>;
 
@@ -25,7 +25,7 @@ type FormErrors = Partial<FormValues>;
  * Helpers
  */
 
-const selectOptions: Array<Choice> = [
+const selectOptions: ReadonlyArray<Choice> = [
   {
     id: "corporate",
     value: "Corporate",
@@ -40,12 +40,12 @@ const selectOptions: Array<Choice> = [
  * Main
  */
 
-export const FinalFormLogin = (): React.ReactNode => {
+export const FinalFormLogin = (): JSX.Element => {
   const initialValues: FormValues = {
     email: "",
     network: pipe(
       selectOptions,
-      A.head,
+      RA.head,
       O.fold(
         () => "",
         (c: Choice) => c.id,
@@ -82,7 +82,7 @@ export const FinalFormLogin = (): React.ReactNode => {
             name="network"
             options={selectOptions}
           />
-          <Button disabled={finalForm.submitting} type="submit">
+          <Button disabled={finalForm.submitting || !finalForm.valid} type="submit">
             Sign In
           </Button>
           <pre>{JSON.stringify(finalForm.values, null, 2)}</pre>

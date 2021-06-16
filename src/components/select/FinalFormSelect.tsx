@@ -1,11 +1,11 @@
 import React from "react";
 import { Field, useField } from "react-final-form";
-import { pipe } from "fp-ts/es6/pipeable";
-import * as O from "fp-ts/es6/Option";
-import * as A from "fp-ts/es6/Array";
+import { pipe } from "fp-ts/pipeable";
+import * as O from "fp-ts/Option";
+import * as RA from "fp-ts/ReadonlyArray";
 
-import "./styles.scss";
 import { Choice } from "./FormikSelect";
+import "./styles.scss";
 
 /*
  * Types
@@ -14,14 +14,14 @@ import { Choice } from "./FormikSelect";
 type SelectProps = {
   label?: string;
   name: string;
-  options?: Array<Choice>;
+  options?: ReadonlyArray<Choice>;
 } & React.SelectHTMLAttributes<HTMLSelectElement>;
 
 /*
  * Components
  */
 
-export const FinalFormSelect: React.FC<SelectProps> = (props) => {
+export const FinalFormSelect = (props: SelectProps): JSX.Element => {
   const { id, label, name, options, ...rest } = props;
   const { input, meta } = useField(name);
 
@@ -44,7 +44,7 @@ export const FinalFormSelect: React.FC<SelectProps> = (props) => {
               O.fold(
                 () => null,
                 (opts) => {
-                  return A.map<Choice, React.ReactNode>((o) => (
+                  return RA.map<Choice, React.ReactNode>((o) => (
                     <option key={o.id} value={o.id}>
                       {o.value}
                     </option>

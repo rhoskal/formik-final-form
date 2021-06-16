@@ -12,7 +12,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
  * Component
  */
 
-export const Button: React.FC<ButtonProps> = (props) => {
+export const Button = (props: ButtonProps): JSX.Element => {
   const { children, ...rest } = props;
 
   return (

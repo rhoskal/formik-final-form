@@ -1,9 +1,9 @@
 import React from "react";
 import { Form, Formik, FormikHelpers, FormikProps } from "formik";
 import * as Yup from "yup";
-import { pipe } from "fp-ts/es6/pipeable";
-import * as A from "fp-ts/es6/Array";
-import * as O from "fp-ts/es6/Option";
+import { pipe } from "fp-ts/pipeable";
+import * as O from "fp-ts/Option";
+import * as RA from "fp-ts/ReadonlyArray";
 
 import { Button } from "../components/button/Button";
 import { FormikInput } from "../components/input/FormikInput";
@@ -13,11 +13,11 @@ import { Choice, FormikSelect } from "../components/select/FormikSelect";
  * Types
  */
 
-type FormValues = {
+interface FormValues {
   email: string;
   network: string;
   password: string;
-};
+}
 
 /*
  * Helpers
@@ -34,7 +34,7 @@ const validationSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const selectOptions: Array<Choice> = [
+const selectOptions: ReadonlyArray<Choice> = [
   {
     id: "corporate",
     value: "Corporate",
@@ -49,12 +49,12 @@ const selectOptions: Array<Choice> = [
  * Main
  */
 
-export const FormikLogin = (): React.ReactNode => {
+export const FormikLogin = (): JSX.Element => {
   const initialValues: FormValues = {
     email: "",
     network: pipe(
       selectOptions,
-      A.head,
+      RA.head,
       O.fold(
         () => "",
         (c: Choice) => c.id,
@@ -94,7 +94,7 @@ export const FormikLogin = (): React.ReactNode => {
             name="network"
             options={selectOptions}
           />
-          <Button disabled={formik.isSubmitting} type="submit">
+          <Button disabled={formik.isSubmitting || !formik.isValid} type="submit">
             Sign In
           </Button>
           <pre>{JSON.stringify(formik.values, null, 2)}</pre>

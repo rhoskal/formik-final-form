@@ -16,7 +16,7 @@ type InputProps = {
  * Components
  */
 
-export const FinalFormInput: React.FC<InputProps> = (props) => {
+export const FinalFormInput = (props: InputProps): JSX.Element => {
   const { id, label, name, ...rest } = props;
   const { input, meta } = useField(name);
 
