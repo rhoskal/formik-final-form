@@ -3,8 +3,6 @@
 with pkgs;
 
 let
-  inherit (lib) optionals;
-
   basePackages = [
     git
     nodejs-14_x
