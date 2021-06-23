@@ -7,5 +7,5 @@ Understand the differences between Formik and Final Form. Blog post [here](https
 ## Running
 
 1. Run nix shell with `nix-shell --pure`
-2. Install deps using `yarn install`
-3. Run dev server using `yarn start`
+2. Install deps using `make deps`
+3. Run dev server using `make run`
